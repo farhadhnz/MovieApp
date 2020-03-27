@@ -18,9 +18,15 @@ namespace MovieApp.API
 {
     public class Startup
     {
+
+        private readonly int? _httpsPort;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            var launchJsonComfig = new ConfigurationBuilder().
+                AddJsonFile("Properties\\launchSettings.json").Build();
+            _httpsPort = launchJsonComfig.GetValue<int>("iisSettings:iisExpress:sslPort");
         }
 
         public IConfiguration Configuration { get; }
@@ -33,6 +39,9 @@ namespace MovieApp.API
             services.AddMvc(opt =>
             {
                 opt.Filters.Add(typeof(JsonExceptionFilter));
+
+                opt.SslPort = _httpsPort;
+                opt.Filters.Add(typeof(RequireHttpsAttribute));
 
                 var jsonFormatter = opt.OutputFormatters.OfType<SystemTextJsonOutputFormatter>().Single();
                 opt.OutputFormatters.Remove(jsonFormatter);

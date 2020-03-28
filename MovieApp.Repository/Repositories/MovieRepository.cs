@@ -24,5 +24,12 @@ namespace MovieApp.Repository.Repositories
 
             return entity;
         }
+
+        public IQueryable<MovieEntity> GetMoviesAsync(CancellationToken ct)
+        {
+            var entities = _context.Movies.AsQueryable();
+
+            return entities;
+        }
     }
 }

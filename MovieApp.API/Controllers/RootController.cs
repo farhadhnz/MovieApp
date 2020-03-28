@@ -18,7 +18,7 @@ namespace MovieApp.API.Controllers
             var response = new RootResponse
             {
                 //href = Url.Link(nameof(GetRoot), null),
-                Movies = Link.To(nameof(MoviesController.GetMovies))
+                Movies = Link.To(nameof(MoviesController.GetMoviesAsync))
             };
 
             return Ok(response);

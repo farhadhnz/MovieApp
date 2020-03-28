@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MovieApp.API.Models.Linking;
+using MovieApp.API.Models.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +15,10 @@ namespace MovieApp.API.Controllers
         [HttpGet(Name = nameof(GetRoot))]
         public IActionResult GetRoot()
         {
-            var response = new
+            var response = new RootResponse
             {
-                href = Url.Link(nameof(GetRoot), null),
-                rooms = new
-                {
-                    href = Url.Link(nameof(MoviesController.GetMovies), null)
-                }
+                //href = Url.Link(nameof(GetRoot), null),
+                Movies = Link.To(nameof(MoviesController.GetMovies))
             };
 
             return Ok(response);

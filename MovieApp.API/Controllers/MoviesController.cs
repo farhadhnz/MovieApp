@@ -3,8 +3,11 @@ using MovieApp.API.Models;
 using MovieApp.API.Models.Linking;
 using MovieApp.API.Models.Paging;
 using MovieApp.API.Models.Resources;
+using MovieApp.API.Models.Searching;
+using MovieApp.API.Models.Sorting;
 using MovieApp.API.Services;
 using MovieApp.Repository;
+using MovieApp.Repository.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,9 +28,11 @@ namespace MovieApp.API.Controllers
 
         [HttpGet(Name = nameof(GetMoviesAsync))]
         public async Task<IActionResult> GetMoviesAsync(CancellationToken ct
-            , [FromQuery] PagingOptions pagingOptions)
+            , [FromQuery] PagingOptions pagingOptions
+            , [FromQuery] SortOptions<Movie, MovieEntity> sortOptions
+            , [FromQuery] SearchOptions<Movie, MovieEntity> searchOptions)
         {
-            var movies = await _service.GetMoviesAsync(pagingOptions, ct);
+            var movies = await _service.GetMoviesAsync(searchOptions, sortOptions, pagingOptions, ct);
 
             var collectionLink = Link.ToCollection(nameof(GetMoviesAsync));
 

@@ -2,6 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using MovieApp.API.Models.Paging;
 using MovieApp.API.Models.Resources;
+using MovieApp.API.Models.Searching;
+using MovieApp.API.Models.Sorting;
+using MovieApp.Repository.Models;
 using MovieApp.Repository.Repositories;
 using System;
 using System.Collections.Generic;
@@ -28,9 +31,11 @@ namespace MovieApp.API.Services
             return mapper.Map<Movie>(movieEntity);
         }
 
-        public async Task<PagedResults<Movie>> GetMoviesAsync(PagingOptions pagingOptions, CancellationToken ct)
+        public async Task<PagedResults<Movie>> GetMoviesAsync(SearchOptions<Movie, MovieEntity> searchOptions, SortOptions<Movie, MovieEntity> sortOptions, PagingOptions pagingOptions, CancellationToken ct)
         {
             var moviesQueryable = repository.GetMoviesAsync(ct);
+            moviesQueryable = searchOptions.Apply(moviesQueryable);
+            moviesQueryable = sortOptions.Apply(moviesQueryable);
 
             var query = mapper.ProjectTo<Movie>(moviesQueryable);
 

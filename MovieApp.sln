@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieApp.API", "MovieApp.API\MovieApp.API.csproj", "{B7FCD5BA-70A6-4760-925A-22119E47533C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieApp.API", "MovieApp.API\MovieApp.API.csproj", "{B7FCD5BA-70A6-4760-925A-22119E47533C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieApp.Repository", "MovieApp.Repository\MovieApp.Repository.csproj", "{283212F0-C12F-4350-A7BB-5066F9B0DB04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieApp.Repository", "MovieApp.Repository\MovieApp.Repository.csproj", "{283212F0-C12F-4350-A7BB-5066F9B0DB04}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5AB5DE02-4037-420D-866E-379544D400A7}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet.config = NuGet.config
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

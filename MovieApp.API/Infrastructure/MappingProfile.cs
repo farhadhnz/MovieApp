@@ -16,6 +16,8 @@ namespace MovieApp.API.Infrastructure
             CreateMap<MovieEntity, Movie>()
                 .ForMember(dest => dest.Self, opt => opt.MapFrom(src => 
                     Link.To(nameof(Controllers.MoviesController.GetMovieByIdAsync), new { movieId = src.Id })));
+
+            CreateMap<UserEntity, User>();
         }
     }
 }

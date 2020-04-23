@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MovieApp.API.Models;
 using MovieApp.API.Models.Linking;
 using MovieApp.API.Models.Paging;
@@ -16,17 +18,21 @@ using System.Threading.Tasks;
 
 namespace MovieApp.API.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("/[controller]")]
     public class MoviesController : Controller
     {
         private readonly IMovieService _service;
+        private readonly IUserService userService;
 
-        public MoviesController(IMovieService service)
+        public MoviesController(IMovieService service, IUserService userService)
         {
             _service = service;
+            this.userService = userService;
         }
 
         [HttpGet(Name = nameof(GetMoviesAsync))]
+        [ResponseCache(CacheProfileName = "Static")]
         public async Task<IActionResult> GetMoviesAsync(CancellationToken ct
             , [FromQuery] PagingOptions pagingOptions
             , [FromQuery] SortOptions<Movie, MovieEntity> sortOptions
@@ -51,6 +57,17 @@ namespace MovieApp.API.Controllers
             if (movie == null) return NotFound();
 
             return Ok(movie);
+        }
+
+        [HttpGet("me")]
+        public async Task<IActionResult> GetMeAsync(CancellationToken ct)
+        {
+            if (User == null) return BadRequest();
+
+            var user = await userService.GetUserAsync(User);
+            if (user == null) return BadRequest();
+
+            return Ok(user);
         }
     }
 }
